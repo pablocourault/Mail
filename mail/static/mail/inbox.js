@@ -35,20 +35,20 @@ function load_mailbox(mailbox) {
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
 
+  var route = '/emails/'+mailbox;
   
-  fetch('/emails/sent')
+  fetch(route)
  .then(response => response.json())
  .then(emails => {
     // Print emails
     console.log(emails);
 
-    
-    encabezado();
+    headers(route);
     emails.forEach(add_correo);
   
     });
 
-    function encabezado()
+    function headers(route)
              {
 
               const contenedor = document.createElement('div');
@@ -61,7 +61,13 @@ function load_mailbox(mailbox) {
 
               var remitente = document.createElement('div');
               remitente.className = 'col';
-              remitente.innerHTML = 'Sender';
+
+              if (route == '/emails/inbox' || route == '/emails/archive')
+                 {remitente.innerHTML = 'From';}
+              else 
+                 {remitente.innerHTML = 'To';}
+
+
               var asunto = document.createElement('div');
               asunto.className = 'col';
               asunto.innerHTML = 'Subject';
@@ -79,12 +85,12 @@ function load_mailbox(mailbox) {
     function add_correo(contents) {
 
     var fila = document.createElement('div');
-    fila.className = 'row';
-    fila.id = 'filacorreo';
+    fila.className = 'row filacorreo';
+    // fila.id = ''; // corregir, no pueden tener el mismo id todas las filas de correos o agregar id del correo
     
     var remitente = document.createElement('div');
     remitente.className = 'col';
-    remitente.innerHTML = contents.sender;
+    remitente.innerHTML = contents.recipients;
     var asunto = document.createElement('div');
     asunto.className = 'col';
     asunto.innerHTML = contents.subject;
@@ -123,9 +129,8 @@ function enviarcorreo() {
     // mode: 'cors',
     body: JSON.stringify({recipients: para,
                           subject: asunto,
-                          body: contenido}),
-                          // redirect: 'follow'          
-})
+                          body: contenido})        
+  })
   .then(response => {console.log(response.status);
                      // save status to variable "estado", to use in the next "then"
                      estado = response.status;
@@ -154,7 +159,10 @@ function enviarcorreo() {
                         }
 
                     console.log(result) });
-                    // event.preventDefault()
-  return false
+
+                    // si no pongo preventDefault me parece el mensaje de network unreachable
+                    event.preventDefault()
+  
+                    return false
 
 }

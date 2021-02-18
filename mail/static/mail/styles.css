@@ -24,4 +24,10 @@ textarea {
        font-size: larger;
        font-weight: bold;}
 
-#filacorreo {border: 1px solid gray}
+.filacorreo {border: 1px solid gray;
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 4px;
+            background: lightblue;
+            }
+
