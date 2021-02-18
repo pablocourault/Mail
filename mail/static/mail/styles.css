@@ -1,0 +1,27 @@
+textarea {
+    min-height: 400px;
+}
+
+#compose-form {width: 80%;}
+#compose-form input[type="submit"] {margin-top: 10px;}
+
+textarea {
+    min-height: 240px;
+}
+
+#diverror {font-family: Verdana, Geneva, Tahoma, sans-serif;
+           font-size: larger;
+           font-weight: bold;
+           float:left;
+           padding: 16px;} 
+
+#botonerror {float: right;
+             position: relative;
+             padding: 0;
+             margin-left: 8px;}
+
+#cruz {font-family: Verdana, Geneva, Tahoma, sans-serif;
+       font-size: larger;
+       font-weight: bold;}
+
+#filacorreo {border: 1px solid gray}
