@@ -24,10 +24,20 @@ textarea {
        font-size: larger;
        font-weight: bold;}
 
+#encabezado {font-family: Verdana, Geneva, Tahoma, sans-serif;
+             font-size: medium;
+             font-weight: bold;
+             text-align: center;}
+
 .filacorreo {border: 1px solid gray;
             border-radius: 4px;
-            padding: 8px;
+            padding: 4px;
             margin-bottom: 4px;
-            background: lightblue;
-            }
+            background: white;
+            text-align: center;}
+
+.filacorreo:hover {opacity: 80%;
+                   color: blueviolet;  
+                   cursor:pointer;
+                   font-weight: bolder;}
 
