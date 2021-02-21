@@ -1,13 +1,52 @@
-textarea {
-    min-height: 400px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
 
-#compose-form {width: 80%;}
-#compose-form input[type="submit"] {margin-top: 10px;}
+hr {border-color: DarkSlateBlue}
+
+#logo {float: right;
+       width: 64px;}
+
+#emails-options {width: 88%;}
+
+#inbox, #sent, #archived, #compose, #btlogout {margin-right: 8px;
+                                               border-radius: 4px;
+                                               border-color: DarkSlateBlue;
+                                               color: DarkSlateBlue;
+                                               font-size: large;}
+
+#btlogout {float: right;
+           color: indianred}
+
+#inbox:hover, #sent:hover, #archived:hover,
+#compose:hover,  #btlogout:hover   {color: black;
+                                    background: white;
+                                    font-weight:bolder; }
+                                                                                     
+
+#email-view, #emails-list, #compose-view {width: 88%;}
+
+
+#div-wellcome {width: 88%;
+               padding: 16px;
+               margin-top: 12px;
+               margin-bottom: 12px;
+               background: linear-gradient(to right, DarkSlateBlue 0%, DarkSlateGrey 100%) !important;
+               color: whitesmoke;}
+
+#user-wellcome {font-family: 'Courgette', cursive;}
+
+#user-name {font-family: 'Roboto', sans-serif;
+            font-size:large;}
+
+#mailbox-name, #newmail-name, #view-name {font-family: 'Courgette', cursive;
+                                          text-align: center;
+                                          color: DarkSlateBlue }
 
 textarea {
     min-height: 240px;
 }
+
+#compose-form input[type="submit"] {margin-top: 10px;}
 
 #diverror {font-family: Verdana, Geneva, Tahoma, sans-serif;
            font-size: larger;
@@ -24,20 +63,41 @@ textarea {
        font-size: larger;
        font-weight: bold;}
 
-#encabezado {font-family: Verdana, Geneva, Tahoma, sans-serif;
-             font-size: medium;
+.encabezado {font-family: 'Courgette', cursive;
+             font-size:large;
              font-weight: bold;
-             text-align: center;}
+             text-align: center;
+             padding-bottom: 8px;
+             color: DarkSlateBlue}
 
-.filacorreo {border: 1px solid gray;
-            border-radius: 4px;
-            padding: 4px;
-            margin-bottom: 4px;
-            background: white;
-            text-align: center;}
+.filacorreo {border: 1px solid DarkSlateBlue;
+             border-radius: 4px;
+             padding: 4px;
+             margin-bottom: 6px;
+             background: white;
+             font-family: 'Roboto', sans-serif;
+             font-size:medium;
+             text-align: center;
+             color: DarkSlateBlue}
 
 .filacorreo:hover {opacity: 80%;
-                   color: blueviolet;  
+                   color: black;  
                    cursor:pointer;
                    font-weight: bolder;}
 
+#view-action:hover {cursor:pointer;
+                    font-weight: bolder;}
+
+#view-titles {font-family: 'Roboto', sans-serif;
+              font-size:medium;
+              text-align: center;
+              color: darkslateBlue}
+
+#view-body {border: 1px solid DarkSlateBlue;
+            border-radius: 4px;
+            padding: 16px;
+            color: darkslateBlue;
+            font-family: 'Roboto', sans-serif;
+            font-size:medium;
+            font-style: oblique;
+            text-align:justify}

@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function compose_email() {
 
   // Show compose view and hide other views
-  document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#emails-list').style.display = 'none';
+  document.querySelector('#email-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
 
   // Clear out composition fields
@@ -30,11 +31,12 @@ function compose_email() {
 function load_mailbox(mailbox) {
   
   // Show the mailbox and hide other views
-  document.querySelector('#emails-view').style.display = 'block';
+  document.querySelector('#emails-list').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
+  document.querySelector('#email-view').style.display = 'none';
 
   // Show the mailbox name
-  document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+  document.querySelector('#emails-list').innerHTML = `<h3 id="mailbox-name">${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3><hr>`;
 
   route = '/emails/'+mailbox;
   
@@ -58,11 +60,11 @@ function headers(route) //construye el encabezado sobre la lista de correos
         const contenedor = document.createElement('div');
         contenedor.className = 'container';
         contenedor.id = 'contenedor';
-        document.querySelector('#emails-view').append(contenedor);
+        document.querySelector('#emails-list').append(contenedor);
 
         var encabezado = document.createElement('div');
-        encabezado.className = 'row';
-        encabezado.id = 'encabezado';
+        encabezado.className = 'row encabezado';
+        // encabezado.id = 'encabezado';
 
         // arma las cuatro columnas de cada correo (una fila por correo)
 
@@ -108,7 +110,7 @@ function add_correo(contents)
         remitente.className = 'col-3';
 
         // arma el contenido dependiento de la ruta seleccionada
-        if (route == '/emails/inbox')
+        if (route == '/emails/inbox' || route == '/emails/archive')
            {remitente.innerHTML = contents.sender;}
         else 
            {remitente.innerHTML = contents.recipients;}
@@ -126,21 +128,21 @@ function add_correo(contents)
            {
             var icono = document.createElement('div');
             icono.className = 'col-1';
-            icono.innerHTML = `<i class="material-icons" style="font-size:24px" title="archive" data-id=${contents.id}>folder</i>`;
+            icono.innerHTML = `<i class="material-icons" style="font-size:24px; color: indianred" title="archive" data-archived=${contents.archived} data-id=${contents.id}>folder</i>`;
            }
 
         if (route == '/emails/sent')
            {
             var icono = document.createElement('div');
             icono.className = 'col-1';
-            icono.innerHTML = `<i class="material-icons" style="font-size:24px; color:green" title="view" data-id=${contents.id}>open_in_new</i>`;
+            icono.innerHTML = `<i class="material-icons" style="font-size:24px; color: green" title="view" data-id=${contents.id}>visibility</i>`;
            }
 
         if (route == '/emails/archive')
            {
             var icono = document.createElement('div');
             icono.className = 'col-1';
-            icono.innerHTML = `<i class="material-icons" style="font-size:24px" title="unarchive" data-id=${contents.id}>folder_open</i>`;
+            icono.innerHTML = `<i class="material-icons" style="font-size:24px; color: LimeGreen" title="unarchive" data-archived=${contents.archived} data-id=${contents.id}>markunread_mailbox</i>`;
            }
 
         fila.appendChild(remitente);
@@ -157,30 +159,82 @@ function add_correo(contents)
 
         // add a listener in ever icon
         document.querySelectorAll('i').forEach(function(i) {
-          i.onclick = function() {
-
-            alert(route);
-
-             // alert("tipo de acción: " + route + " - id: " + i.dataset.id);
-
-             // crear y llamar acá a una función que archive, unarchive o llame a otra función "vercorreo" (que hay que hacer también)
-             // crear y llamar acá a una función que archive, unarchive o llame a otra función "vercorreo" (que hay que hacer también)
-
-              clickonicon = 1;
-
-          }});
+               i.onclick = function() 
+                                  {
+                                   archivar(route, i.dataset.archived, i.dataset.id);
+                                   clickonicon = 1;
+                                  }});
 
         fila.addEventListener('click', filaesc );
 
           // para el siguiente evento hay que agregar una función ver correo
-          function filaesc() {
-            if (clickonicon == 1)
-               // {alert("nothing to do here");
-                {clickonicon = 0;}
-            else
-               {alert("click en fila " + fila.id);}
-                }
+          function filaesc() 
+                 {
+                  if (clickonicon == 1)
+                     // {alert("nothing to do here");
+                     { clickonicon = 0; }
+                  else
+                     { vercorreo(fila.id); }
+                 }
 
+       }
+
+function archivar(route, archived, id) // archive or unarchive mail
+
+       {
+         if (route == '/emails/sent')
+            { vercorreo(id) }
+         else
+            { if (archived === 'true')
+                 {fetch('/emails/'+id, {
+                        method: 'PUT',
+                        body: JSON.stringify({
+                        archived: false})})
+                        .then(result => {
+                           load_mailbox('inbox')})
+
+                 }
+              else {fetch('/emails/'+id, {
+                          method: 'PUT',
+                          body: JSON.stringify({
+                          archived: true })})
+                          .then(result => {
+                           load_mailbox('inbox')})
+              
+                   }
+
+             // load_mailbox('inbox');
+            }
+
+       }
+
+
+function vercorreo(id)
+
+       {
+         // Show compose view and hide other views
+         document.querySelector('#email-view').style.display = 'block';
+         document.querySelector('#emails-list').style.display = 'none';
+         document.querySelector('#compose-view').style.display = 'none';
+
+         fetch('/emails/'+id)
+         .then(response => response.json())
+         .then(email => {
+               // Print email
+               console.log(email);
+               document.querySelector('#view-from').innerHTML = email.sender;
+               document.querySelector('#view-subject').innerHTML = email.subject;
+               document.querySelector('#view-date').innerHTML = email.timestamp;
+               document.querySelector('#view-action').innerHTML =
+                 `<i class="material-icons" style="font-size:32px; color: Coral" title="reply" data-id=${id}>forward</i>`;
+               document.querySelector('#view-body').innerHTML = email.body;
+               });
+
+               // hacer un catch error por si no encuentra el correo
+               // marcar el correo como leído
+               // si la bandeja es de enviados, ver qué hacer con la opción reply
+               // corregir cuando estoy viendo un correo en Send, debe decir To en lugar de From
+         
        }
 
 
