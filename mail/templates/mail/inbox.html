@@ -2,8 +2,9 @@
 {% load static %}
 
 {% block body %}
+
     <div id="div-wellcome">
-    <h2 id="user-wellcome"> Wellcome: <text id="user-name">{{ request.user.email }}</text><img id="logo" src="/static/mail/icon2.png" ></h2>
+    <h2 id="user-wellcome"> Wellcome: <text id="user-name">{{ request.user.email }}</text><img class="logo" src="/static/mail/icon2.png" ></h2>
     </div>
     <div id="emails-options">
     <button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
@@ -68,6 +69,8 @@
             <input type="submit" class="btn btn-primary" value="Send"/>
         </form>
     </div>
+
+    {{ request.user.email|json_script:"user_email" }}
 {% endblock %}
 
 {% block script %}

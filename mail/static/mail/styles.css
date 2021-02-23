@@ -3,7 +3,7 @@
 
 hr {border-color: DarkSlateBlue}
 
-#logo {float: right;
+.logo {float: right;
        width: 64px;}
 
 #emails-options {width: 88%;}
@@ -23,17 +23,25 @@ hr {border-color: DarkSlateBlue}
                                     font-weight:bolder; }
                                                                                      
 
-#email-view, #emails-list, #compose-view {width: 88%;}
-
+#div-login, #div-register, #email-view, #emails-list, #compose-view {width: 88%;}
+   
+#div-login-header, #div-register-header 
+                   {padding: 16px;
+                   margin-top: 12px;
+                   margin-bottom: 12px;
+                   background: linear-gradient(to left, mediumblue 0%, DarkSlateBlue 100%) !important;
+                   color: whitesmoke;
+                   font-family: 'Courgette', cursive;}
 
 #div-wellcome {width: 88%;
                padding: 16px;
                margin-top: 12px;
                margin-bottom: 12px;
-               background: linear-gradient(to right, DarkSlateBlue 0%, DarkSlateGrey 100%) !important;
+               background: linear-gradient(to left , mediumblue 0%, DarkSlateBlue 100%) !important;
                color: whitesmoke;}
 
 #user-wellcome {font-family: 'Courgette', cursive;}
+
 
 #user-name {font-family: 'Roboto', sans-serif;
             font-size:large;}
@@ -43,7 +51,7 @@ hr {border-color: DarkSlateBlue}
                                           color: DarkSlateBlue }
 
 textarea {
-    min-height: 240px;
+    min-height: 160px;
 }
 
 #compose-form input[type="submit"] {margin-top: 10px;}
@@ -101,3 +109,30 @@ textarea {
             font-size:medium;
             font-style: oblique;
             text-align:justify}
+
+/* Animations */
+
+@keyframes cambio {
+       0% {
+           opacity: 1;
+           height: 100%;
+           line-height: 100%;
+           padding: 4px;
+           margin-bottom: 6px;
+       }
+       75% {
+           opacity: 0;
+           height: 100%;
+           line-height: 100%;
+           padding: 4px;
+           margin-bottom: 6px;
+       }
+       100% {
+           opacity: 0;
+           height: 0px;
+           line-height: 0px;
+           padding: 0px;
+           margin-bottom: 0px;
+       }
+   }
+   

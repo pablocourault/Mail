@@ -2,7 +2,12 @@
 
 {% block body %}
 
-    <h2>Login</h2>
+    <div id=div-login>
+        
+        <div id="div-login-header">
+        <h2>Mail Login <img class="logo" src="/static/mail/icon2.png"></h2> 
+        </div>
+    
 
     {% if message %}
         <div>{{ message }}</div>
@@ -20,5 +25,7 @@
     </form>
 
     Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+
+</div>
 
 {% endblock %}
